@@ -8,5 +8,15 @@
  * file that was distributed with this source code.
  */
 
-$loader = require __DIR__ . "/../vendor/autoload.php";
-$loader->add('Etechnika\\', __DIR__ . DIRECTORY_SEPARATOR .'..'. DIRECTORY_SEPARATOR .'src');
+namespace Etechnika\ExtLib\Domain;
+
+
+use \Exception;
+
+
+/**
+ * Class load new version tld list
+ *
+ * @author Tomasz Rutkowski <tomasz@rutkowski.co>
+ */
+class InvalidTldException extends Exception {}
