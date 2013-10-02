@@ -36,7 +36,7 @@ class TldUtilsTest extends \PHPUnit_Framework_TestCase
      * @covers Etechnika\ExtLib\Domain\TldUtils::isValid
      * @dataProvider providerIsValid
      */
-    public function testIsValid( $strTld, $booTrue )
+    public function testIsValid( $strTld, $booStrict, $booTrue )
     {
         if ( $booTrue ) {
             $this->assertTrue( TldUtils::isValid( $strTld ), $strTld );
@@ -50,15 +50,15 @@ class TldUtilsTest extends \PHPUnit_Framework_TestCase
     public function providerIsValid()
     {
         return array(
-            array( '.pl', true ),
-            array( 'pl', true ),
-            array( '.com.pl', true ),
-            array( 'www.com.pl', false ),
-            array( '', false ),
-            array( 1, false ),
-            array( 'xn--0zwm56d', true ),
-            array( '.xn--0zwm56d', true ),
-            array( '.الاردن', false ), // encoded .xn--mgbayh7gpa
+            array( '.pl', true, true ),
+            array( 'pl', true, true ),
+            array( '.com.pl', true, true ),
+            array( 'www.com.pl', true, false ),
+            array( '', true, false ),
+            array( 1, true, false ),
+            array( 'xn--0zwm56d', true, true ),
+            array( '.xn--0zwm56d', true, true ),
+            array( '.الاردن', true, false ), // encoded .xn--mgbayh7gpa
         );
     }
 

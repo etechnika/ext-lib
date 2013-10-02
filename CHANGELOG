@@ -1,5 +1,8 @@
-0.0.2 - 2013.09.23 20:53
+0.0.3 - 2013.10.02
+add strict param to tld check
+
+0.0.2 - 2013.09.23
 add new tld co.yu and co.yu
 
-0.0.1 - 2013.09.22 20:07
+0.0.1 - 2013.09.22
 add tld utils
