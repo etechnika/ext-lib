@@ -1,4 +1,3 @@
+!.gitignore
 vendor
-composer.phar
-phpunit.xml
 composer.lock
