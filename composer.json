@@ -16,7 +16,7 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "etechnika/idna-convert": "dev-master"
+        "etechnika/idna-convert": "*"
     },
     "autoload": {
         "psr-0": {
