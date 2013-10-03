@@ -20,7 +20,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Etechnika": "src"
+            "Etechnika\\ExtLib": "src/Etechnika/ExtLib"
         }
     }
 }
