@@ -29,11 +29,12 @@ class Tld
     /**
      *
      * @param String $strTld
+     * @param boolean $booStrict
      */
-    public function __construct( $strTld )
+    public function __construct( $strTld, $booStrict = true )
     {
         $this->strTld = TldUtils::removeDot( $strTld );
-        if ( ! TldUtils::isValid( $this->strTld ) ) {
+        if ( ! TldUtils::isValid( $this->strTld, $booStrict ) ) {
             throw new InvalidTldException( 'Invalid tld' );
         }
     }

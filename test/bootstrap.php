@@ -9,4 +9,4 @@
  */
 
 $loader = require __DIR__ . "/../vendor/autoload.php";
-$loader->add('Etechnika\\', __DIR__ . DIRECTORY_SEPARATOR .'..'. DIRECTORY_SEPARATOR .'src');
+//$loader->add('Etechnika\\', __DIR__ . DIRECTORY_SEPARATOR .'..'. DIRECTORY_SEPARATOR .'src');

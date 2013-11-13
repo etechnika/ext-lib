@@ -39,10 +39,10 @@ class TldTest extends \PHPUnit_Framework_TestCase
      * @covers Etechnika\ExtLib\Domain\Tld::__construct
      * @dataProvider provider__Construct
      */
-    public function test__Construct( $strTld, $booTrue )
+    public function test__Construct( $strTld, $booStrict, $booTrue )
     {
         try {
-            $objTld = new Tld( $strTld );
+            $objTld = new Tld( $strTld, $booStrict );
 
             $booTrue ? $this->assertTrue( true ) : $this->fail( $strTld );
         } catch ( InvalidTldException $e ) {
@@ -55,15 +55,35 @@ class TldTest extends \PHPUnit_Framework_TestCase
     {
         // array( tld, level, exists )
         return array(
-            array( 'pl', true ),
-            array( '.pl', true ),
-            array( 'com.pl', true ),
-            array( '.com.pl', true ),
-            array( 'www.com.pl', false ),
-            array( '', false ),
-            array( 1, false ),
-            array( 'xn--0zwm56d', true ),
-            array( 'الاردن', false ), // encoded .xn--mgbayh7gpa
+            // Tld list
+            array( 'pl', true, true ),
+            array( '.pl', true, true ),
+            array( 'com.pl', true, true ),
+            array( '.com.pl', true, true ),
+            array( 'www.com.pl', true, false ),
+            array( '', true, false ),
+            array( 1, true, false ),
+            array( 'xn--0zwm56d', true, true ),
+            array( 'الاردن', true, false ), // encoded .xn--mgbayh7gpa
+            array( 'notldnofun', true, false ),
+            array( '.notldnofun', true, false ),
+            array( 'żółśćńęńś', true, false ),
+            array( 'notldnofun', true, false ),
+
+            // Only syntax
+            array( 'xn--0zwm56d', false, true ),
+            array( 'notldnofun', false, true ),
+            array( '.notldnofun', false, true ),
+            array( 'żółśćńęńś', false, false ),
+            array( 'żółśćńęńś', false, false ),
+            array( 'no-tldnofun', false, true ),
+            array( 'no--tldnofun', false, true ),
+            array( 'no---tldnofun', false, true ),
+            array( 'no---------tldnofun', false, true ),
+            array( 'notldnofun--', false, false ),
+            array( '--notldnofun', false, false ),
+            array( '--notldnofun--', false, false ),
+            array( '--xn--notldnofun', false, false ),
         );
     }
 
@@ -78,7 +98,7 @@ class TldTest extends \PHPUnit_Framework_TestCase
         $objTld = new Tld( $strTld );
         $this->assertEquals( $strResult, $objTld->getTld() );
     }
-    
+
 
     public function providerGetTld()
     {
