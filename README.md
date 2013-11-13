@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/etechnika/ext-lib.png)](https://travis-ci.org/etechnika/ext-lib)
 ext-lib
 =======
 
