@@ -10,7 +10,6 @@
 
 namespace Etechnika\ExtLib\Domain;
 
-
 /**
  * Class load new version tld list
  *
@@ -25,20 +24,18 @@ class Tld
      */
     private $strTld;
 
-
     /**
      *
-     * @param String $strTld
+     * @param String  $strTld
      * @param boolean $booStrict
      */
-    public function __construct( $strTld, $booStrict = true )
+    public function __construct($strTld, $booStrict = true)
     {
         $this->strTld = TldUtils::removeDot( $strTld );
         if ( ! TldUtils::isValid( $this->strTld, $booStrict ) ) {
             throw new InvalidTldException( 'Invalid tld' );
         }
     }
-
 
     /**
      * Return tld
@@ -50,7 +47,6 @@ class Tld
         return $this->strTld;
     }
 
-
     /**
      * Return tld level
      *
@@ -61,4 +57,3 @@ class Tld
         return TldUtils::getLevel( $this->getTld() );
     }
 }
-

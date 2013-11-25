@@ -12,7 +12,6 @@ namespace Etechnika\ExtLib\Domain;
 
 use \InvalidArgumentException;
 
-
 /**
  * Tld list
  *
@@ -966,7 +965,6 @@ class TldList
         'zw',
     );
 
-
     /**
      * Return complet tld list
      *
@@ -977,21 +975,20 @@ class TldList
         return $this->arrTlds;
     }
 
-
     /**
      * Returns a list with the specified level
      *
-     * @param integer $intLevel 1 or greater
+     * @param  integer $intLevel 1 or greater
      * @return array
      */
-    public function getLevel( $intLevel = 1 )
+    public function getLevel($intLevel = 1)
     {
         if ( !is_int( $intLevel ) || $intLevel <= 0 ) {
             throw new InvalidArgumentException( 'Received wrong input value' );
         }
 
         $arrResults = array();
-        foreach( $this->get() as $strTld ) {
+        foreach ( $this->get() as $strTld ) {
             if ( TldUtils::getLevel( $strTld ) != $intLevel ) {
                 continue;
             }

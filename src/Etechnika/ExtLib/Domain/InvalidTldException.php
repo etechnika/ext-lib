@@ -10,9 +10,7 @@
 
 namespace Etechnika\ExtLib\Domain;
 
-
 use \Exception;
-
 
 /**
  * Class load new version tld list

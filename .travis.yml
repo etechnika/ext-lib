@@ -4,5 +4,17 @@ php:
   - "5.4"
   - "5.3"
 
+branches:
+  only:
+    - master
+
 before_script:
  - composer install --dev
+
+script:
+  - mkdir -p build/logs
+  - php vendor/bin/phpunit -c travis.phpunit.xml
+
+
+after_script:
+  - php vendor/bin/coveralls
