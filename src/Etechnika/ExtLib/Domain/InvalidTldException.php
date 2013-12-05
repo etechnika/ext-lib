@@ -17,4 +17,7 @@ use \Exception;
  *
  * @author Tomasz Rutkowski <tomasz@rutkowski.co>
  */
-class InvalidTldException extends Exception {}
+class InvalidTldException extends Exception
+{
+
+}

@@ -1,4 +1,5 @@
 <?php
+
 namespace Etechnika\ExtLib\Domain;
 
 
@@ -12,15 +13,14 @@ class TldUtilsTest extends \PHPUnit_Framework_TestCase
      */
     protected $object;
 
-
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
     protected function setUp()
     {
-    }
 
+    }
 
     /**
      * Tears down the fixture, for example, closes a network connection.
@@ -31,78 +31,96 @@ class TldUtilsTest extends \PHPUnit_Framework_TestCase
 
     }
 
-
     /**
+     * @param string  $strTld
+     * @param boolean $booStrict
+     * @param boolean $booTrue
+     *
      * @covers Etechnika\ExtLib\Domain\TldUtils::isValid
      * @dataProvider providerIsValid
      */
-    public function testIsValid( $strTld, $booStrict, $booTrue )
+    public function testIsValid($strTld, $booStrict, $booTrue)
     {
-        if ( $booTrue ) {
-            $this->assertTrue( TldUtils::isValid( $strTld ), $strTld );
-        }
-        else {
-            $this->assertFalse( TldUtils::isValid( $strTld ), $strTld );
+        if ($booTrue) {
+            $this->assertTrue(TldUtils::isValid($strTld), $strTld);
+        } else {
+            $this->assertFalse(TldUtils::isValid($strTld), $strTld);
         }
     }
 
-
+    /**
+     * Data provider
+     *
+     * @return array
+     */
     public function providerIsValid()
     {
         return array(
-            array( '.pl', true, true ),
-            array( 'pl', true, true ),
-            array( '.com.pl', true, true ),
-            array( 'www.com.pl', true, false ),
-            array( '', true, false ),
-            array( 1, true, false ),
-            array( 'xn--0zwm56d', true, true ),
-            array( '.xn--0zwm56d', true, true ),
-            array( '.الاردن', true, false ), // encoded .xn--mgbayh7gpa
+            array('.pl', true, true),
+            array('pl', true, true),
+            array('.com.pl', true, true),
+            array('www.com.pl', true, false),
+            array('', true, false),
+            array(1, true, false),
+            array('xn--0zwm56d', true, true),
+            array('.xn--0zwm56d', true, true),
+            array('.الاردن', true, false), // encoded .xn--mgbayh7gpa
         );
     }
 
-
     /**
+     * @param string $strTld
+     * @param string $strResult
+     *
      * @covers Etechnika\ExtLib\Domain\TldUtils::removeDot
      * @dataProvider providerRemoveDot
      */
-    public function testRemoveDot( $strTld, $strResult )
+    public function testRemoveDot($strTld, $strResult)
     {
-        $this->assertEquals( $strResult, TldUtils::removeDot( $strTld ), $strResult );
+        $this->assertEquals($strResult, TldUtils::removeDot($strTld), $strResult);
     }
 
-
+    /**
+     * Data provider
+     *
+     * @return array
+     */
     public function providerRemoveDot()
     {
         return array(
-            array( '.pl', 'pl' ),
-            array( 'pl', 'pl' ),
-            array( '.com.pl', 'com.pl' ),
-            array( 'www.com.pl', 'www.com.pl' ),
-            array( '', '' ),
+            array('.pl', 'pl'),
+            array('pl', 'pl'),
+            array('.com.pl', 'com.pl'),
+            array('www.com.pl', 'www.com.pl'),
+            array('', ''),
         );
     }
 
-
     /**
+     * @param string  $strTld
+     * @param integer $intLevel
+     *
      * @covers Etechnika\ExtLib\Domain\TldUtils::getLevel
      * @dataProvider providerGetLevel
      */
-    public function testGetLevel( $strTld, $intLevel )
+    public function testGetLevel($strTld, $intLevel)
     {
-        $this->assertEquals( $intLevel, TldUtils::getLevel( $strTld ) );
+        $this->assertEquals($intLevel, TldUtils::getLevel($strTld));
     }
 
-
+    /**
+     * Data provider
+     *
+     * @return array
+     */
     public function providerGetLevel()
     {
         return array(
-            array( '.pl', 1 ),
-            array( 'pl', 1 ),
-            array( '.com.pl', 2 ),
-            array( 'www.com.pl', 3 ),
-            array( '', 0 ),
+            array('.pl', 1),
+            array('pl', 1),
+            array('.com.pl', 2),
+            array('www.com.pl', 3),
+            array('', 0),
         );
     }
 }

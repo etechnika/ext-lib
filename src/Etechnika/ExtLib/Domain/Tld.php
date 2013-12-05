@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Etechnika package.
  *
@@ -7,8 +8,8 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Etechnika\ExtLib\Domain;
+
 
 /**
  * Class load new version tld list
@@ -25,15 +26,16 @@ class Tld
     private $strTld;
 
     /**
+     * Construct
      *
      * @param String  $strTld
      * @param boolean $booStrict
      */
     public function __construct($strTld, $booStrict = true)
     {
-        $this->strTld = TldUtils::removeDot( $strTld );
-        if ( ! TldUtils::isValid( $this->strTld, $booStrict ) ) {
-            throw new InvalidTldException( 'Invalid tld' );
+        $this->strTld = TldUtils::removeDot($strTld);
+        if (!TldUtils::isValid($this->strTld, $booStrict)) {
+            throw new InvalidTldException('Invalid tld');
         }
     }
 
@@ -54,6 +56,6 @@ class Tld
      */
     public function getLevel()
     {
-        return TldUtils::getLevel( $this->getTld() );
+        return TldUtils::getLevel($this->getTld());
     }
 }

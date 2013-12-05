@@ -1,4 +1,5 @@
 <?php
+
 namespace Etechnika\ExtLib\Domain;
 
 
@@ -12,7 +13,6 @@ class TldListTest extends \PHPUnit_Framework_TestCase
      */
     protected $object;
 
-
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
@@ -21,7 +21,6 @@ class TldListTest extends \PHPUnit_Framework_TestCase
     {
         $this->object = new TldList;
     }
-
 
     /**
      * Tears down the fixture, for example, closes a network connection.
@@ -32,42 +31,47 @@ class TldListTest extends \PHPUnit_Framework_TestCase
 
     }
 
-
     /**
      * @covers Etechnika\ExtLib\Domain\TldList::get
      */
     public function testGet()
     {
-        $this->assertTrue( in_array( 'pl', $this->object->get() ), 'pl' );
-        $this->assertTrue( in_array( 'com.pl', $this->object->get() ), '.com.pl' );
+        $this->assertTrue(in_array('pl', $this->object->get()), 'pl');
+        $this->assertTrue(in_array('com.pl', $this->object->get()), '.com.pl');
     }
 
-
     /**
+     * @param string  $strTld
+     * @param integer $intLevel
+     * @param boolean $booTrue
+     *
      * @covers Etechnika\ExtLib\Domain\TldList::getLevel
      * @dataProvider providerGetLevel
      */
-    public function testGetLevel( $strTld, $intLevel, $booTrue )
+    public function testGetLevel($strTld, $intLevel, $booTrue)
     {
-        if ( $booTrue )  {
-            $this->assertTrue( in_array( $strTld, $this->object->get( $intLevel ) ), $strTld );
-        }
-        else {
-            $this->assertFalse( in_array( $strTld, $this->object->get( $intLevel ) ), $strTld );
+        if ($booTrue) {
+            $this->assertTrue(in_array($strTld, $this->object->get($intLevel)), $strTld);
+        } else {
+            $this->assertFalse(in_array($strTld, $this->object->get($intLevel)), $strTld);
         }
     }
 
-
+    /**
+     * Data provider
+     *
+     * @return array
+     */
     public function providerGetLevel()
     {
         // array( tld, level, exists )
         return array(
-            array( 'pl', 1, true ),
-            array( 'www.com.pl', 3, false ),
-            array( '', 1, false ),
-            array( 1, 1, false ),
-            array( 'xn--0zwm56d', 1, true ),
-            array( 'الاردن', 1, false ), // encoded .xn--mgbayh7gpa
+            array('pl', 1, true),
+            array('www.com.pl', 3, false),
+            array('', 1, false),
+            array(1, 1, false),
+            array('xn--0zwm56d', 1, true),
+            array('الاردن', 1, false), // encoded .xn--mgbayh7gpa
         );
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Etechnika package.
  *
@@ -7,10 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Etechnika\ExtLib\Domain;
 
 use \InvalidArgumentException;
+
 
 /**
  * Tld list
@@ -978,18 +979,19 @@ class TldList
     /**
      * Returns a list with the specified level
      *
-     * @param  integer $intLevel 1 or greater
+     * @param integer $intLevel 1 or greater
+     *
      * @return array
      */
     public function getLevel($intLevel = 1)
     {
-        if ( !is_int( $intLevel ) || $intLevel <= 0 ) {
-            throw new InvalidArgumentException( 'Received wrong input value' );
+        if (!is_int($intLevel) || $intLevel <= 0) {
+            throw new InvalidArgumentException('Received wrong input value');
         }
 
         $arrResults = array();
-        foreach ( $this->get() as $strTld ) {
-            if ( TldUtils::getLevel( $strTld ) != $intLevel ) {
+        foreach ($this->get() as $strTld) {
+            if (TldUtils::getLevel($strTld) != $intLevel) {
                 continue;
             }
             $arrResults[] = $strTld;

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Etechnika package.
  *
@@ -7,8 +8,8 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Etechnika\ExtLib\Domain;
+
 
 /**
  * Utils class
@@ -17,30 +18,32 @@ namespace Etechnika\ExtLib\Domain;
  */
 class TldUtils
 {
+
     /**
      * Check tld
      *
-     * @param  string  $strTld
-     * @param  boolean $booStrict Only tld from list
+     * @param string  $strTld    Tld
+     * @param boolean $booStrict Only tld from list
+     *
      * @return boolean
      */
     public static function isValid($strTld, $booStrict = true)
     {
-        $strTld = static::removeDot( $strTld );
+        $strTld = static::removeDot($strTld);
         $objTldList = new TldList();
 
         if ($booStrict) {
-            return in_array( $strTld, $objTldList->get() );
+            return in_array($strTld, $objTldList->get());
         }
 
-        if ( strpos( $strTld, '.' ) === false ) {
-            $arrCheckList = array( $strTld );
+        if (strpos($strTld, '.') === false) {
+            $arrCheckList = array($strTld);
         } else {
-            $arrCheckList = explode( '.', $strTld );
+            $arrCheckList = explode('.', $strTld);
         } // endif
 
         foreach ($arrCheckList as $strTmpTld) {
-            if ( preg_match( '/^[0-9a-z]+[0-9a-z\-]*[0-9a-z]+$/', $strTmpTld ) < 1 ) {
+            if (preg_match('/^[0-9a-z]+[0-9a-z\-]*[0-9a-z]+$/', $strTmpTld) < 1) {
                 return false;
             }
         } // endforeach
@@ -51,27 +54,29 @@ class TldUtils
     /**
      * Remove first dot from tld
      *
-     * @param  string $strTld
+     * @param string $strTld
+     *
      * @return string
      */
     public static function removeDot($strTld)
     {
-        return strpos( $strTld, '.' ) === 0 ? substr( $strTld, 1 ) : $strTld;
+        return strpos($strTld, '.') === 0 ? substr($strTld, 1) : $strTld;
     }
 
     /**
      * Return tld level
      *
+     * @param string $strTld
+     * 
      * @return integer
      */
     public static function getLevel($strTld)
     {
-        $strTld = self::removeDot( (string) $strTld );
-        if ( empty( $strTld ) ) {
+        $strTld = self::removeDot((string) $strTld);
+        if (empty($strTld)) {
             return 0;
         }
 
-        return count( explode( '.', (string) $strTld ) );
+        return count(explode('.', (string) $strTld));
     }
-
 }
