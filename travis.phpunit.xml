@@ -15,7 +15,7 @@
 >
 
     <testsuites>
-        <testsuite name="Idna converter">
+        <testsuite name="Etechnika external lib">
             <directory suffix="Test.php">tests</directory>
         </testsuite>
     </testsuites>
