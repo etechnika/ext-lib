@@ -26,15 +26,28 @@ class Tld
     private $strTld;
 
     /**
+     * Create object
+     *
+     * @param string $strTld
+     * @param string $booIntranet
+     * @throws InvalidTldException
+     */
+    public static function create($strTld, $booIntranet = true)
+    {
+        return new static($strTld, $booIntranet);
+    }
+
+    /**
      * Construct
      *
      * @param String  $strTld
-     * @param boolean $booStrict
+     * @param boolean $booIntranet
+     * @throws InvalidTldException
      */
-    public function __construct($strTld, $booStrict = true)
+    public function __construct($strTld, $booIntranet = true)
     {
         $this->strTld = TldUtils::removeDot($strTld);
-        if (!TldUtils::isValid($this->strTld, $booStrict)) {
+        if (!TldUtils::isValid($this->strTld, $booIntranet)) {
             throw new InvalidTldException('Invalid tld');
         }
     }
@@ -57,5 +70,44 @@ class Tld
     public function getLevel()
     {
         return TldUtils::getLevel($this->getTld());
+    }
+
+    /**
+     * Is tld idn
+     *
+     * <example>
+     * xn--w-uga1v0h - true
+     * xn--w-uga1v0h.pl - true
+     * xn--w-uga1v0h.xn--w-uga1v0h - true
+     * aaaa.xn--w-uga1v0h - true
+     * aaaa.pl - false
+     * </example>
+     *
+     * @return boolean
+     */
+    public function isIdn()
+    {
+        return strpos( $this->getTld(), 'xn--' ) !== false;
+    }
+
+    /**
+     * Return tld
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getTld();
+    }
+
+    /**
+     * Return tld
+     *
+     * @see __toString
+     * @return string
+     */
+    public function __invoke()
+    {
+        return $this->getTld();
     }
 }

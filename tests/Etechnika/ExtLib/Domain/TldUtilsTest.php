@@ -33,13 +33,13 @@ class TldUtilsTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param string  $strTld
-     * @param boolean $booStrict
+     * @param boolean $booIntranet
      * @param boolean $booTrue
      *
      * @covers Etechnika\ExtLib\Domain\TldUtils::isValid
      * @dataProvider providerIsValid
      */
-    public function testIsValid($strTld, $booStrict, $booTrue)
+    public function testIsValid($strTld, $booIntranet, $booTrue)
     {
         if ($booTrue) {
             $this->assertTrue(TldUtils::isValid($strTld), $strTld);
