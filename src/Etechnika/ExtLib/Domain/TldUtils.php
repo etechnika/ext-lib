@@ -22,7 +22,7 @@ class TldUtils
     /**
      * Check tld
      *
-     * @param string  $strTld    Tld
+     * @param string  $strTld      Tld
      * @param boolean $booIntranet
      *
      * @return boolean

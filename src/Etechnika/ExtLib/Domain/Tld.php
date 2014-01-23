@@ -30,6 +30,8 @@ class Tld
      *
      * @param string $strTld
      * @param string $booIntranet
+     *
+     * @return Tld
      * @throws InvalidTldException
      */
     public static function create($strTld, $booIntranet = false)
@@ -42,6 +44,7 @@ class Tld
      *
      * @param String  $strTld
      * @param boolean $booIntranet
+     *
      * @throws InvalidTldException
      */
     public function __construct($strTld, $booIntranet = false)
@@ -88,7 +91,7 @@ class Tld
      */
     public function isIdn()
     {
-        return strpos( $this->getTld(), 'xn--' ) !== false;
+        return strpos($this->getTld(), 'xn--') !== false;
     }
 
     /**

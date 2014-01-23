@@ -964,7 +964,6 @@ class TldList
         'zj.cn',
         'zm',
         'zw',
-
         // new tld not allowed now
         'ads',
         'agency',

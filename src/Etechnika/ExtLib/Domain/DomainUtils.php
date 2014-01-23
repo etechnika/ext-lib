@@ -1,14 +1,9 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace Etechnika\ExtLib\Domain;
 
 use Etechnika\IdnaConvert\IdnaConvert;
+
 
 /**
  * Description of DomainUtils
@@ -17,10 +12,12 @@ use Etechnika\IdnaConvert\IdnaConvert;
  */
 class DomainUtils
 {
+
     /**
      * Decode domain name
      *
      * @param string $strDomainName
+     *
      * @return string
      */
     public static function idnaDecode($strDomainName)
@@ -32,6 +29,7 @@ class DomainUtils
      * Encode domain name
      *
      * @param string $strDomainName
+     *
      * @return string
      */
     public static function idnaEncode($strDomainName)
@@ -41,10 +39,11 @@ class DomainUtils
 
     /**
      * Check domain name
-     *
+     * 
      * @see Domain::__construct
-     * @param string $strDomainName
+     * @param string  $strDomainName
      * @param boolean $booIntranet
+     *
      * @return boolean
      */
     public static function isValid($strDomainName, $booIntranet = false)
@@ -52,26 +51,22 @@ class DomainUtils
         $arrCheckList = explode('.', $strDomainName);
 
         foreach ($arrCheckList as $strTmpName) {
-            if (preg_match('/^[0-9a-z\-]+$/i', $strTmpName) < 1) {
-                return false;
-            }
-            if (preg_match('/(^\-|\-$)/', $strTmpName) === 1) {
-                return false;
-            }
-            if (strpos($strDomainName, '.') === false) {
+            if (preg_match('/^[0-9a-z\-]+$/i', $strTmpName) < 1 || preg_match('/(^\-|\-$)/', $strTmpName) === 1 || strpos($strDomainName, '.') === false) {
+
                 return false;
             }
         } // endforeach
 
-        if (preg_match( '/^(?P<part>[[:alnum:]]([[:alnum:]\-]*[[:alnum:]])?)(\.(?&part))+$/i', $strDomainName ) !== 1) {
+        if (preg_match('/^(?P<part>[[:alnum:]]([[:alnum:]\-]*[[:alnum:]])?)(\.(?&part))+$/i', $strDomainName) !== 1) {
+
             return false;
         }
 
-        $strTld = array_pop( $arrCheckList );
-        if (!TldUtils::isValid($strTld, $booIntranet)) {
+        if (!TldUtils::isValid(array_pop($arrCheckList), $booIntranet)) {
+
             return false;
         }
+
         return true;
     }
-
 }
