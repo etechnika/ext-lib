@@ -45,7 +45,7 @@ class TldTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstruct($strTld, $booIntranet, $booTrue)
     {
-        $strFailMsg = sprintf( 'Tld name: %d, intranet: %s, expected: %s', $strTld, $booIntranet ? 'true' : 'false', $booTrue ? 'true' : 'false' );
+        $strFailMsg = sprintf( 'Tld name: %s, intranet: %s, expected: %s', $strTld, $booIntranet ? 'true' : 'false', $booTrue ? 'true' : 'false' );
         try {
             new Tld($strTld, $booIntranet);
 
@@ -65,33 +65,36 @@ class TldTest extends \PHPUnit_Framework_TestCase
         // array( tld, level, exists )
         return array(
             // Tld list
-            array('pl', true, true),
-            array('.pl', true, true),
-            array('com.pl', true, true),
-            array('.com.pl', true, true),
-            array('www.com.pl', true, false),
+            array('pl', false, true),
+            array('.pl', false, true),
+            array('com.pl', false, true),
+            array('.com.pl', false, true),
+            array('www.com.pl', false, false),
+            array('', false, false),
+            array(1, false, false),
+            array('xn--0zwm56d', false, true),
+            array('الاردن', false, false), // encoded .xn--mgbayh7gpa
+            array('notldnofun', false, false),
+            array('.notldnofun', false, false),
+            array('żółśćńęńś', false, false),
+            array('notldnofun', false, false),
+            array('xn--0zwm56d', false, true),
+            // Only syntax
             array('', true, false),
             array(1, true, false),
             array('xn--0zwm56d', true, true),
-            array('الاردن', true, false), // encoded .xn--mgbayh7gpa
-            array('notldnofun', true, false),
-            array('.notldnofun', true, false),
+            array('notldnofun', true, true),
+            array('.notldnofun', true, true),
             array('żółśćńęńś', true, false),
-            array('notldnofun', true, false),
-            // Only syntax
-            array('xn--0zwm56d', false, true),
-            array('notldnofun', false, true),
-            array('.notldnofun', false, true),
-            array('żółśćńęńś', false, false),
-            array('żółśćńęńś', false, false),
-            array('no-tldnofun', false, true),
-            array('no--tldnofun', false, true),
-            array('no---tldnofun', false, true),
-            array('no---------tldnofun', false, true),
-            array('notldnofun--', false, false),
-            array('--notldnofun', false, false),
-            array('--notldnofun--', false, false),
-            array('--xn--notldnofun', false, false),
+            array('żółśćńęńś', true, false),
+            array('no-tldnofun', true, true),
+            array('no--tldnofun', true, true),
+            array('no---tldnofun', true, true),
+            array('no---------tldnofun', true, true),
+            array('notldnofun--', true, false),
+            array('--notldnofun', true, false),
+            array('--notldnofun--', true, false),
+            array('--xn--notldnofun', true, false),
         );
     }
 
@@ -105,12 +108,13 @@ class TldTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreate($strTld, $booIntranet, $booTrue)
     {
+        $strFailMsg = sprintf( 'Tld name: %s, intranet: %s, expected: %s', $strTld, $booIntranet ? 'true' : 'false', $booTrue ? 'true' : 'false' );
         try {
             Tld::create($strTld, $booIntranet);
 
-            $booTrue ? $this->assertTrue(true) : $this->fail($strTld);
+            $booTrue ? $this->assertTrue(true, $strFailMsg) : $this->fail($strFailMsg);
         } catch (InvalidTldException $e) {
-            !$booTrue ? $this->assertTrue(true) : $this->fail($strTld);
+            !$booTrue ? $this->assertTrue(true, $strFailMsg) : $this->fail($strFailMsg);
         }
     }
 
@@ -159,22 +163,25 @@ class TldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param string $strTld
+     * @param string  $strTld
+     * @param boolean $booIntranet
      * @param boolean $booTrue
+     *
      * @covers Etechnika\ExtLib\Domain\Tld::isIdn
      * @dataProvider providerIsIdn
      */
-    public function testIsIdn($strTld, $booTrue)
+    public function testIsIdn($strTld, $booIntranet, $booTrue)
     {
+        $strFailMsg = sprintf( 'Tld name: %s, Intranet: %s, expected: %s', $strTld, $booIntranet ? 'true' : 'false', $booTrue ? 'true' : 'false' );
         try {
-            $booResult = Tld::create($strTld, false)->isIdn();
+            $booResult = Tld::create($strTld, $booIntranet)->isIdn();
             if ($booTrue) {
-                $this->assertTrue($booResult, $strTld);
+                $this->assertTrue($booResult, $strFailMsg);
             } else {
-                $this->assertFalse($booResult, $strTld);
+                $this->assertFalse($booResult, $strFailMsg);
             } // endif
         } catch (InvalidTldException $e) {
-            $this->fail($strTld);
+            $this->fail('Invalid tld. '. $strFailMsg);
         }
     }
 
@@ -186,11 +193,11 @@ class TldTest extends \PHPUnit_Framework_TestCase
     public function providerIsIdn()
     {
         return array(
-            array('xn--w-uga1v0h', true),
-            array('xn--w-uga1v0h.pl', true),
-            array('xn--w-uga1v0h.xn--w-uga1v0h', true),
-            array('aaaa.xn--w-uga1v0h', true),
-            array('aaaa.pl', false),
+            array('xn--0zwm56d', false, true),
+            array('xn--0zwm56d.pl', true, true),
+            array('xn--0zwm56d.xn--0zwm56d', true, true),
+            array('aaaa.xn--0zwm56d', true, true),
+            array('aaaa.pl', true, false),
         );
     }
 

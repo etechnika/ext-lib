@@ -43,6 +43,9 @@ class TldUtils
         } // endif
 
         foreach ($arrCheckList as $strTmpTld) {
+            if (preg_match('/^([0-9]+)$/', $strTmpTld) ) {
+                return false;
+            }
             if (preg_match('/^[[:alnum:]]+([\-]+[[:alnum:]]+)*$/', $strTmpTld) < 1) {
 //            if (preg_match('/^[0-9a-z]+[0-9a-z\-]*[0-9a-z]+$/', $strTmpTld) < 1) {
                 return false;

@@ -69,6 +69,16 @@ class TldUtilsTest extends \PHPUnit_Framework_TestCase
             array('mynetwork', true, true),
             array('xn--0zwm56d', true, true),
             array('.الاردن', true, false), // encoded .xn--mgbayh7gpa
+            array('xn--0zwm56d', false, true),
+            array('xn--0zwm56d.pl', false, false),
+            array('xn--0zwm56d.xn--0zwm56d', false, false),
+            array('aaaa.xn--0zwm56d', false, false),
+            array('aaaa.pl', false, false),
+            array('xn--0zwm56d', true, true),
+            array('xn--0zwm56d.pl', true, true),
+            array('xn--0zwm56d.xn--0zwm56d', true, true),
+            array('aaaa.xn--0zwm56d', true, true),
+            array('aaaa.pl', true, true),
         );
     }
 
