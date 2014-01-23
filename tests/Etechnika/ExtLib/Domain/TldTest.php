@@ -45,12 +45,13 @@ class TldTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstruct($strTld, $booIntranet, $booTrue)
     {
+        $strFailMsg = sprintf( 'Tld name: %d, intranet: %s, expected: %s', $strTld, $booIntranet ? 'true' : 'false', $booTrue ? 'true' : 'false' );
         try {
             new Tld($strTld, $booIntranet);
 
-            $booTrue ? $this->assertTrue(true) : $this->fail($strTld);
+            $booTrue ? $this->assertTrue(true, $strFailMsg) : $this->fail($strFailMsg);
         } catch (InvalidTldException $e) {
-            !$booTrue ? $this->assertTrue(true) : $this->fail($strTld);
+            !$booTrue ? $this->assertTrue(true, $strFailMsg) : $this->fail($strFailMsg);
         }
     }
 

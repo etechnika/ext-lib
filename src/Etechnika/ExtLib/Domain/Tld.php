@@ -32,7 +32,7 @@ class Tld
      * @param string $booIntranet
      * @throws InvalidTldException
      */
-    public static function create($strTld, $booIntranet = true)
+    public static function create($strTld, $booIntranet = false)
     {
         return new static($strTld, $booIntranet);
     }
@@ -44,12 +44,13 @@ class Tld
      * @param boolean $booIntranet
      * @throws InvalidTldException
      */
-    public function __construct($strTld, $booIntranet = true)
+    public function __construct($strTld, $booIntranet = false)
     {
-        $this->strTld = TldUtils::removeDot($strTld);
-        if (!TldUtils::isValid($this->strTld, $booIntranet)) {
+        $strTld = TldUtils::removeDot($strTld);
+        if (!TldUtils::isValid($strTld, $booIntranet)) {
             throw new InvalidTldException('Invalid tld');
         }
+        $this->strTld = strtolower($strTld);
     }
 
     /**

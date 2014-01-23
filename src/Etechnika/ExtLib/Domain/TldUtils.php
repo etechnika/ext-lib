@@ -23,16 +23,16 @@ class TldUtils
      * Check tld
      *
      * @param string  $strTld    Tld
-     * @param boolean $booStrict Only tld from list
+     * @param boolean $booIntranet
      *
      * @return boolean
      */
-    public static function isValid($strTld, $booStrict = true)
+    public static function isValid($strTld, $booIntranet = false)
     {
         $strTld = static::removeDot($strTld);
         $objTldList = new TldList();
 
-        if ($booStrict) {
+        if (!$booIntranet) {
             return in_array($strTld, $objTldList->get());
         }
 
@@ -43,7 +43,8 @@ class TldUtils
         } // endif
 
         foreach ($arrCheckList as $strTmpTld) {
-            if (preg_match('/^[0-9a-z]+[0-9a-z\-]*[0-9a-z]+$/', $strTmpTld) < 1) {
+            if (preg_match('/^[[:alnum:]]+([\-]+[[:alnum:]]+)*$/', $strTmpTld) < 1) {
+//            if (preg_match('/^[0-9a-z]+[0-9a-z\-]*[0-9a-z]+$/', $strTmpTld) < 1) {
                 return false;
             }
         } // endforeach
@@ -67,7 +68,7 @@ class TldUtils
      * Return tld level
      *
      * @param string $strTld
-     * 
+     *
      * @return integer
      */
     public static function getLevel($strTld)

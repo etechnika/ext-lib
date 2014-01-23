@@ -42,9 +42,9 @@ class TldUtilsTest extends \PHPUnit_Framework_TestCase
     public function testIsValid($strTld, $booIntranet, $booTrue)
     {
         if ($booTrue) {
-            $this->assertTrue(TldUtils::isValid($strTld), $strTld);
+            $this->assertTrue(TldUtils::isValid($strTld, $booIntranet), 'Tld name: '. $strTld .' intranet: '. var_export($booIntranet, true));
         } else {
-            $this->assertFalse(TldUtils::isValid($strTld), $strTld);
+            $this->assertFalse(TldUtils::isValid($strTld, $booIntranet), 'Tld name: '. $strTld .' intranet: '. var_export($booIntranet, true));
         }
     }
 
@@ -56,14 +56,18 @@ class TldUtilsTest extends \PHPUnit_Framework_TestCase
     public function providerIsValid()
     {
         return array(
-            array('.pl', true, true),
-            array('pl', true, true),
-            array('.com.pl', true, true),
-            array('www.com.pl', true, false),
-            array('', true, false),
-            array(1, true, false),
+            array('.pl', false, true),
+            array('pl', false, true),
+            array('.com.pl', false, true),
+            array('www.com.pl', false, false),
+            array('', false, false),
+            array(1, false, false),
+            array('xn--0zwm56d', false, true),
+            array('.xn--0zwm56d', false, true),
+            array('.الاردن', false, false), // encoded .xn--mgbayh7gpa
+            array('local', true, true),
+            array('mynetwork', true, true),
             array('xn--0zwm56d', true, true),
-            array('.xn--0zwm56d', true, true),
             array('.الاردن', true, false), // encoded .xn--mgbayh7gpa
         );
     }
