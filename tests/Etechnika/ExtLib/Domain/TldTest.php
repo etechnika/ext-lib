@@ -122,13 +122,13 @@ class TldTest extends \PHPUnit_Framework_TestCase
      * @param string $strTld
      * @param string $strResult
      *
-     * @covers Etechnika\ExtLib\Domain\Tld::getTld
-     * @dataProvider providerGetTld
+     * @covers Etechnika\ExtLib\Domain\Tld::getName
+     * @dataProvider providerGetName
      */
-    public function testGetTld($strTld, $strResult)
+    public function testGetName($strTld, $strResult)
     {
         $objTld = new Tld($strTld);
-        $this->assertEquals($strResult, $objTld->getTld());
+        $this->assertEquals($strResult, $objTld->getName());
     }
 
     /**
@@ -136,7 +136,7 @@ class TldTest extends \PHPUnit_Framework_TestCase
      *
      * @return array
      */
-    public function providerGetTld()
+    public function providerGetName()
     {
         // array( tld, level, exists )
         return array(

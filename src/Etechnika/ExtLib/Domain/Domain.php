@@ -5,10 +5,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 namespace Etechnika\ExtLib\Domain;
 
 use Exception;
+use InvalidArgumentException;
+
 
 /**
  * Domain class
@@ -33,19 +34,20 @@ class Domain
 
     /**
      *
-     * @param string $strDomainName
+     * @param string  $strDomainName
+     * @param boolean $booIntranet Is the domain name to be correct not only the Internet but also on the local network
      * @return Domian
      * @throws InvalidDomainException
      */
-    public static function create($strDomainName)
+    public static function create($strDomainName, $booIntranet = false)
     {
-        return new static($strDomainName);
+        return new static($strDomainName, $booIntranet);
     }
 
     /**
      * Construct and validate domain
      *
-     * @param string $strDomainName
+     * @param string  $strDomainName
      * @param boolean $booIntranet Is the domain name to be correct not only the Internet but also on the local network
      * @throws InvalidDomainException
      */
@@ -53,7 +55,7 @@ class Domain
     {
         $booIntranet = (boolean) $booIntranet;
         if (!DomainUtils::isValid($strDomainName, $booIntranet)) {
-            throw new InvalidDomainException('Invalid domain name');
+            throw new InvalidDomainException('Invalid domain name "' . var_export($strDomainName, true) . '"');
         }
         $this->strDomainName = strtolower($strDomainName);
         $this->booIntranet = $booIntranet;
@@ -88,7 +90,7 @@ class Domain
     {
         list($strName, ) = explode('.', $this->getDomainName());
 
-		return $strName;
+        return $strName;
     }
 
     /**
@@ -113,9 +115,23 @@ class Domain
      * @return Domain
      * @throws Exception
      */
+    public function hasParentDomain()
+    {
+        return $this->isSubdomain();
+    }
+
+    /**
+     * Return parent domain
+     *
+     * @return Domain
+     * @throws Exception
+     */
     public function getParentDomain()
     {
-
+        if (!$this->hasParentDomain()) {
+            throw new InvalidDomainException();
+        }
+        return static::create($this->getTldNameOrSubdomainName(), $this->isIntranet());
     }
 
     /**
@@ -125,7 +141,20 @@ class Domain
      */
     public function isSubdomain()
     {
+        if (TldUtils::isValid($this->getTldNameOrSubdomainName(), $this->isIntranet())) {
+            return false;
+        }
+        return true;
+    }
 
+    /**
+     * Return tld name or subdomain name
+     *
+     * @return string
+     */
+    public function getTldNameOrSubdomainName()
+    {
+        return substr($this->getDomainName(), strpos($this->getDomainName(), '.') + 1);
     }
 
     /**
@@ -135,9 +164,10 @@ class Domain
      */
     public function getTld()
     {
-        list(, $strName) = explode('.', $this->getDomainName());
-
-        return Tld::create($strName, $this->isIntranet());
+        if ($this->isSubdomain()) {
+            throw new InvalidTldException('Invalid tld "' . var_export($this->getTldNameOrSubdomainName(), true) . '"');
+        }
+        return Tld::create($this->getTldNameOrSubdomainName(), $this->isIntranet());
     }
 
     /**

@@ -23,7 +23,7 @@ class Tld
      *
      * @var string
      */
-    private $strTld;
+    private $strName;
 
     /**
      * Create object
@@ -51,9 +51,9 @@ class Tld
     {
         $strTld = TldUtils::removeDot($strTld);
         if (!TldUtils::isValid($strTld, $booIntranet)) {
-            throw new InvalidTldException('Invalid tld');
+            throw new InvalidTldException('Invalid tld "' . var_export($strTld, true) . '"');
         }
-        $this->strTld = strtolower($strTld);
+        $this->strName = strtolower($strTld);
     }
 
     /**
@@ -61,9 +61,9 @@ class Tld
      *
      * @return string
      */
-    public function getTld()
+    public function getName()
     {
-        return $this->strTld;
+        return $this->strName;
     }
 
     /**
@@ -73,7 +73,7 @@ class Tld
      */
     public function getLevel()
     {
-        return TldUtils::getLevel($this->getTld());
+        return TldUtils::getLevel($this->getName());
     }
 
     /**
@@ -91,7 +91,7 @@ class Tld
      */
     public function isIdn()
     {
-        return strpos($this->getTld(), 'xn--') !== false;
+        return strpos($this->getName(), 'xn--') !== false;
     }
 
     /**
@@ -101,7 +101,7 @@ class Tld
      */
     public function __toString()
     {
-        return $this->getTld();
+        return $this->getName();
     }
 
     /**
@@ -112,6 +112,6 @@ class Tld
      */
     public function __invoke()
     {
-        return $this->getTld();
+        return $this->getName();
     }
 }

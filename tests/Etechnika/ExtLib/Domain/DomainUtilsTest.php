@@ -2,6 +2,8 @@
 
 namespace Etechnika\ExtLib\Domain;
 
+require_once dirname( __FILE__ ) .'/DomainNameTestFixture.php';
+
 use Etechnika\ExtLib\Domain\DomainUtils;
 use Etechnika\IdnaConvert\IdnaConvert;
 use PHPUnit_Framework_TestCase;
@@ -129,41 +131,7 @@ class DomainUtilsTest extends PHPUnit_Framework_TestCase
      */
     public function providerIsValid()
     {
-        return array(
-            array('', false, false),
-            array('aaaaaaaaa', false, false),
-            array('.aaaaaaaaa', false, false),
-            array('aaaaaaaaa.', false, false),
-            array('aaaaaaaaa.pl', false, true),
-            array('.aaaaaaaaa.pl', false, false),
-            array('ArdDFGR.pl', false, true),
-            array('aaaaa..aaaa.pl', false, false),
-            array('aaaaa...aaaa.pl', false, false),
-            array('aa3333aaaaaaa.pl', false, true),
-            array('aa-aaaaaaa.pl', false, true),
-            array('aa--aaaaaaa.pl', false, true),
-            array('aa---aaaaaaa.pl', false, true),
-            array('1aaaaa2.pl', false, true),
-            array('-aaaa.pl', false, false),
-            array('aaaa-.pl', false, false),
-            array('aaaaaaaaa.locale', true, true),
-            array('aaaaaaaaa.my-network', true, true),
-            array('aaaaaaaaa.localhost', true, true),
-
-            array('xn--w-uga1v8h.pl', false, true), // PL idn
-            array('a.xn--p1ai', false, true), // Russia
-            array('a.xn--mgbayh7gpa', false, true), // Jordan
-            array('a.xn--mgbayh7gpa', false, true), // Jordan
-            array('a.xn--mgb9awbf', false, true),
-            array('a.xn--clchc0ea0b2g2a9gcd', false, true),
-            array('żółw.pl', false, false), // PL idn
-            array('a.рф', false, false), // Russia
-            array('a.الاردن', false, false), // Jordan
-            array('a.الاردن', false, false), // Jordan
-            array('a.الارد', false, false),
-            array('a.عمان', false, false),
-            array('a.சிங்கப்பூர்"', false, false),
-        );
+        return DomainNameTestFixture::providerAllDomains();
     }
 
 }
