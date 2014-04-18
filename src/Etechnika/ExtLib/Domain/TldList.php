@@ -513,6 +513,7 @@ class TldList
         'mo',
         'mo.cn',
         'mobi',
+        'moda',
         'mp',
         'mq',
         'mr',
