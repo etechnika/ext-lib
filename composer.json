@@ -36,6 +36,11 @@
         "psr-0": {
             "Etechnika\\ExtLib": "src"
         }
+    },
+    "extra": {
+        "branches": {
+            "dev-master": "1.0-dev"
+        }
     }
 }
 
