@@ -2103,7 +2103,7 @@ class TldList
         'yun',
         'zero',
         'zuerich',
-
+	'lol',
     );
 
     /**
