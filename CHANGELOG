@@ -1,3 +1,7 @@
+0.0.4 - 2015.07.09
+Update iana tld list
+Update composer dependency
+
 0.0.3 - 2013.10.02
 add strict param to tld check
 

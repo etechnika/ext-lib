@@ -20,17 +20,18 @@
         "etechnika/idna-convert": "@stable"
     },
     "require-dev": {
-        "phpunit/phpunit": "@stable",
-        "phpunit/php-code-coverage": "@stable",
-        "satooshi/php-coveralls": "@stable",
         "fabpot/php-cs-fixer": "@stable",
-        "squizlabs/php_codesniffer": "@stable",
-        "sebastian/phpcpd": "@stable",
+        "mayflower/php-codebrowser": "@stable",
+        "pdepend/pdepend": "@stable",
+        "phpdocumentor/phpdocumentor": "@stable",
         "phploc/phploc": "@stable",
-        "pdepend/pdepend" : "@stable",
         "phpmd/phpmd": "@stable",
+        "phpunit/php-code-coverage": "@stable",
         "phpunit/phpcov": "@stable",
-        "mayflower/php-codebrowser": "@stable"
+        "phpunit/phpunit": "@stable",
+        "satooshi/php-coveralls": "@stable",
+        "sebastian/phpcpd": "@stable",
+        "squizlabs/php_codesniffer": "@stable"
     },
     "autoload": {
         "psr-0": {
@@ -43,5 +44,3 @@
         }
     }
 }
-
-
