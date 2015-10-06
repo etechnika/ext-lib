@@ -813,6 +813,7 @@ class TldList
         'gov',
         'gov.gr',
         'gov.ng',
+        'gov.pl',
         'gp',
         'gq',
         'gr',
