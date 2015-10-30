@@ -1,4 +1,7 @@
+sudo: false
+
 language: php
+
 php:
   - hhvm
   - 7.0
