@@ -8,7 +8,7 @@
     "authors": [
         {
             "name": "Tomasz Rutkowski",
-            "email": "tomasz@etechnika.eu",
+            "email": "majorserwis+etechnika@gmail.com",
             "homepage": "http://etechnika.eu",
             "role": "Developer"
         }
@@ -16,7 +16,7 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": "~5.3",
+        "php": ">=5.3.0",
         "etechnika/idna-convert": "@stable"
     },
     "require-dev": {
